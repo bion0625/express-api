@@ -1,0 +1,30 @@
+extends ../base.pug
+
+block content 
+    div(id="textReadContainer").write__container(data-id=text._id)
+        if errorMessage
+            span=errorMessage
+        form(action=`/text/detail/${text._id}`)
+            input(disabled value=text.title)
+            textarea(disabled)=text.text
+            if String(loggedInUser._id)===String(text.owner)
+                input(value="modify", type="submit")
+                input(value="delete", type="button", id="textDelete")
+    if loggedIn
+        div.text__add-comments
+            textarea(cols="30", rows="10", placeholder="Write a nice comment...")#textCommentContent
+            button#textCommentAddBtn Add
+    div.text__comments
+        ul 
+            each comment in comments
+                li.text__comment(data-id=comment.id)
+                    i.fas.fa-comment
+                    span  #{comment.content}
+                    if String(comment.owner.id)===String(loggedInUser._id)
+                        span.comment__delete  ❌
+                    else 
+                        span.text__comment-owner  #{comment.owner.name}
+
+block scripts
+    script(src="/static/js/textComment.js") 
+    script(src="/static/js/text.js") 

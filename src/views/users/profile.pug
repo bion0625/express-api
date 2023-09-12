@@ -1,0 +1,15 @@
+extends ../base
+include ../mixins/text
+
+block content 
+    div.profile__data
+        if user.avatarUrl
+            img(src=user.avatarUrl).avatar
+        else
+            img.no_avatar
+        h3=user.name
+    div.home__text
+        each item in texts
+            +text(item)
+        else 
+            sapn.empty__message No Text found
