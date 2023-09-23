@@ -9,6 +9,7 @@ import videoRouter from "./router/videoRouter";
 import { localsMiddleware } from "./middleware";
 import apiRouter from "./router/apiRouter";
 import textRouter from "./router/textRouter";
+import cors from "cors";
 
 const app = express();
 const logger = morgan("dev");
@@ -16,6 +17,12 @@ const logger = morgan("dev");
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 
+app.use(cors({
+    origin:[
+        "http://localhost:3000",
+        "https://bion0625.github.io/rebellia/"
+    ]
+}))
 app.use(logger);
 
 app.use(express.urlencoded({ extended: true, limit : "50mb" }));
